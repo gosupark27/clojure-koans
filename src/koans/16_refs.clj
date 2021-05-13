@@ -17,7 +17,7 @@
           @the-world))
 
   "Alter where you need not replace"
-  (= "hello!!!" (let [exclamator (fn [x] (str x "!"))]
+  (= "better!!!" (let [exclamator (fn [x] (str x "!"))]
           (dosync
            (alter the-world exclamator)
            (alter the-world exclamator)
@@ -31,7 +31,8 @@
 
   "Functions passed to alter may depend on the data in the ref"
   (= 20 (do
-          (dosync (alter the-world ___))))
+          (dosync (alter the-world (fn [x] (+ x 20))))))
+                  ;;(alter the-world + 20) alter takes in the ref, func, and the arguments that will be passed to func
 
   "Two worlds are better than one"
   (= ["Real Jerry" "Bizarro Jerry"]
@@ -40,4 +41,4 @@
           (ref-set the-world {})
           (alter the-world assoc :jerry "Real Jerry")
           (alter bizarro-world assoc :jerry "Bizarro Jerry")
-          __))))
+          [(get @the-world :jerry) (get @bizarro-world :jerry)]))))
