@@ -14,13 +14,13 @@
 
 (defmacro recursive-infix [form]
   (cond (not (seq? form))
-        __
+        form ;;if the form is not a sequence it is just a raw number
         (= 1 (count form))
         `(recursive-infix ~(first form))
         :else
         (let [operator (second form)
               first-arg (first form)
-              others __]
+              others (rest (rest form))]
           `(~operator
             (recursive-infix ~first-arg)
             (recursive-infix ~others)))))
@@ -31,7 +31,7 @@
 
   "I can haz infix?"
   (= (+ 9 1) (infix (9 + 1)))
-
+  ;; or it can be (= 10 (infix (9 + 1)))
   "Remember, these are nothing but code transformations"
   (= '(+ 9 1) (macroexpand '(infix (9 + 1))))
 

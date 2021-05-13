@@ -26,7 +26,7 @@
 
 (meditations
  "A multimethod takes one or more arguments to dispatch on"
- (= __
+ (= :first
     (multimethod-without-args :first))
 
  "Though it can be ignored and represented by _ in defmethods"
